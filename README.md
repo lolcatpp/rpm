@@ -21,10 +21,7 @@ Each subpath is its own self-contained RPM repository with `repodata/` and a rea
 ### Fedora / RHEL / Rocky / Alma (dnf)
 
 ```bash
-. /etc/os-release
-case "$ID" in rhel|rocky|almalinux) sudo dnf install -y dnf-plugins-core ;; esac
-sudo dnf config-manager addrepo --from-repofile=https://lolcatpp.github.io/rpm/lolcatpp.repo
-sudo dnf install -y lolcat++
+. /etc/os-release && case "$ID" in rhel|rocky|almalinux) sudo dnf install -y dnf-plugins-core ;; esac && sudo dnf config-manager addrepo --from-repofile=https://lolcatpp.github.io/rpm/lolcatpp.repo && sudo dnf install -y lolcat++
 ```
 
 The single `.repo` file uses `$ID` and `$releasever` so it resolves to the right subpath on every supported distro. It will also follow you across distro upgrades within a family (e.g. Fedora 43 → 44).
