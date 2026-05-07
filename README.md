@@ -6,34 +6,41 @@ Hosted via GitHub Pages at <https://lolcatpp.github.io/rpm/>.
 
 ## Supported distributions
 
-| Distribution | Subpath |
-|---|---|
-| Fedora 43 | `fedora-43` |
-| Fedora 44 | `fedora-44` |
-| RHEL 9 / Rocky / Alma 9 | `rhel-9` |
-| RHEL 10 / Rocky / Alma 10 | `rhel-10` |
-| openSUSE Leap 16.0 | `opensuse-leap-16.0` |
+| Distribution | Subpath | Architectures |
+|---|---|---|
+| Fedora 43 | `fedora-43` | x86_64, aarch64 |
+| Fedora 44 | `fedora-44` | x86_64, aarch64 |
+| RHEL 9 / Rocky 9 / Alma 9 | `rhel-9` | x86_64, aarch64 |
+| RHEL 10 / Rocky 10 / Alma 10 | `rhel-10` | x86_64, aarch64 |
+| openSUSE Leap 16.0 | `opensuse-leap-16.0` | x86_64, aarch64 |
 
-Each subpath is its own self-contained RPM repository with `repodata/` and a ready-to-use `lolcatpp.repo` file.
+Each subpath is its own self-contained RPM repository with `repodata/` and a ready-to-use `lolcatpp.repo` file. The `.repo` file uses `$releasever` so once added it will follow you across distro upgrades within a family (e.g. Fedora 43 → 44).
 
 ## Installing
 
 ### Fedora / RHEL / Rocky / Alma (dnf)
 
-Pick the subpath matching your distro and run:
+The snippet below picks the right subpath from `/etc/os-release`:
 
 ```bash
-# Example for Fedora 44 — change the URL to fedora-43, rhel-9, rhel-10, etc. as needed
-sudo dnf config-manager addrepo --from-repofile=https://lolcatpp.github.io/rpm/fedora-44/lolcatpp.repo
-sudo dnf install lolcat++
+. /etc/os-release
+case "$ID" in
+  fedora)               family="fedora-${VERSION_ID}" ;;
+  rocky|almalinux|rhel) family="rhel-${VERSION_ID%%.*}" ;;
+  *) echo "unsupported distro: $ID"; exit 1 ;;
+esac
+sudo dnf install -y dnf-plugins-core   # for `config-manager` on RHEL-family
+sudo dnf config-manager addrepo --from-repofile="https://lolcatpp.github.io/rpm/${family}/lolcatpp.repo"
+sudo dnf install -y lolcat++
 ```
-
-(On RHEL 9 / Rocky / Alma you may need `sudo dnf install dnf-plugins-core` first to get `config-manager`.)
 
 ### openSUSE Leap (zypper)
 
 ```bash
-sudo zypper addrepo --gpgcheck https://lolcatpp.github.io/rpm/opensuse-leap-16.0/lolcatpp.repo lolcatpp
+. /etc/os-release
+sudo zypper addrepo --gpgcheck \
+  "https://lolcatpp.github.io/rpm/opensuse-leap-${VERSION_ID}/lolcatpp.repo" \
+  lolcatpp
 sudo rpm --import https://lolcatpp.github.io/rpm/pubkey.gpg
 sudo zypper install lolcat++
 ```
