@@ -9,6 +9,7 @@ Hosted via GitHub Pages at <https://lolcatpp.github.io/rpm/>.
 | Distribution | Subpath | Architectures |
 |---|---|---|
 | Fedora 43 | `fedora-43` | x86_64, aarch64 |
+| Fedora 44 | `fedora-44` | x86_64, aarch64 |
 | RHEL 9 / Rocky 9 / Alma 9 | `rhel-9` | x86_64, aarch64 |
 | RHEL 10 / Rocky 10 / Alma 10 | `rhel-10` | x86_64, aarch64 |
 | openSUSE Leap 16.0 | `opensuse-leap-16.0` | x86_64, aarch64 |
