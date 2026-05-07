@@ -21,7 +21,8 @@ Each subpath is its own self-contained RPM repository with `repodata/` and a rea
 ### Fedora / RHEL / Rocky / Alma (dnf)
 
 ```bash
-sudo dnf install -y dnf-plugins-core   # only needed on RHEL/Rocky/Alma
+. /etc/os-release
+case "$ID" in rhel|rocky|almalinux) sudo dnf install -y dnf-plugins-core ;; esac
 sudo dnf config-manager addrepo --from-repofile=https://lolcatpp.github.io/rpm/lolcatpp.repo
 sudo dnf install -y lolcat++
 ```
