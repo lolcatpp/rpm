@@ -8,10 +8,11 @@ Hosted via GitHub Pages at <https://lolcatpp.github.io/rpm/>.
 
 | Distribution | Subpath |
 |---|---|
-| Fedora 41 | `fedora-41` |
-| Fedora 42 | `fedora-42` |
+| Fedora 43 | `fedora-43` |
+| Fedora 44 | `fedora-44` |
 | RHEL 9 / Rocky / Alma 9 | `rhel-9` |
-| openSUSE Leap 15.6 | `opensuse-leap-15.6` |
+| RHEL 10 / Rocky / Alma 10 | `rhel-10` |
+| openSUSE Leap 16.0 | `opensuse-leap-16.0` |
 
 Each subpath is its own self-contained RPM repository with `repodata/` and a ready-to-use `lolcatpp.repo` file.
 
@@ -22,8 +23,8 @@ Each subpath is its own self-contained RPM repository with `repodata/` and a rea
 Pick the subpath matching your distro and run:
 
 ```bash
-# Fedora 42 — change the URL to fedora-41, rhel-9, etc. as needed
-sudo dnf config-manager addrepo --from-repofile=https://lolcatpp.github.io/rpm/fedora-42/lolcatpp.repo
+# Example for Fedora 44 — change the URL to fedora-43, rhel-9, rhel-10, etc. as needed
+sudo dnf config-manager addrepo --from-repofile=https://lolcatpp.github.io/rpm/fedora-44/lolcatpp.repo
 sudo dnf install lolcat++
 ```
 
@@ -32,7 +33,7 @@ sudo dnf install lolcat++
 ### openSUSE Leap (zypper)
 
 ```bash
-sudo zypper addrepo --gpgcheck https://lolcatpp.github.io/rpm/opensuse-leap-15.6/lolcatpp.repo lolcatpp
+sudo zypper addrepo --gpgcheck https://lolcatpp.github.io/rpm/opensuse-leap-16.0/lolcatpp.repo lolcatpp
 sudo rpm --import https://lolcatpp.github.io/rpm/pubkey.gpg
 sudo zypper install lolcat++
 ```
