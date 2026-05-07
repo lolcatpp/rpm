@@ -20,21 +20,17 @@ Each subpath is its own self-contained RPM repository with `repodata/` and a rea
 
 ### Fedora / RHEL / Rocky / Alma (dnf)
 
-The snippet below picks the right subpath from `/etc/os-release`:
-
 ```bash
-. /etc/os-release
-case "$ID" in
-  fedora)               family="fedora-${VERSION_ID}" ;;
-  rocky|almalinux|rhel) family="rhel-${VERSION_ID%%.*}" ;;
-  *) echo "unsupported distro: $ID"; exit 1 ;;
-esac
-sudo dnf install -y dnf-plugins-core   # for `config-manager` on RHEL-family
-sudo dnf config-manager addrepo --from-repofile="https://lolcatpp.github.io/rpm/${family}/lolcatpp.repo"
+sudo dnf install -y dnf-plugins-core   # only needed on RHEL/Rocky/Alma
+sudo dnf config-manager addrepo --from-repofile=https://lolcatpp.github.io/rpm/lolcatpp.repo
 sudo dnf install -y lolcat++
 ```
 
+The single `.repo` file uses `$ID` and `$releasever` so it resolves to the right subpath on every supported distro. It will also follow you across distro upgrades within a family (e.g. Fedora 43 → 44).
+
 ### openSUSE Leap (zypper)
+
+zypper doesn't expand `$ID`, so the URL has to name the version explicitly:
 
 ```bash
 . /etc/os-release
